@@ -3,9 +3,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 
-
-// const peopleRouter = require("./routes/peopleRoutes.js");
-// const choreRouter = require("./routes/choreRoutes.js");
+const budgetRouter = require("./routes/budgetRoutes.js");
+const transactionRouter = require("./routes/transactionRoutes.js");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -15,8 +14,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "client", "public")))
 
 //routes
-// app.use("/api/people", peopleRouter);
-// app.use("/api/chores", choreRouter);
+app.use("/api/budgets", budgetRouter);
+app.use("/api/transactions", transactionRouter);
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/budget-app", (err)=>{
     if(err) console.error(err);
