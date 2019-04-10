@@ -6,6 +6,9 @@ const budgetSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String
+    },
     transactions: [{ 
         type: Schema.Types.ObjectId, 
         ref: 'transaction' 
