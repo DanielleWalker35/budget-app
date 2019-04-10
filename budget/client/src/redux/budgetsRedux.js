@@ -62,9 +62,11 @@ export const getBudgets = () => {
     }
 }
 export const addBudget = (newBudget) => {
+    console.log('the new budge', newBudget);
     return dispatch => {
         axios.post("/api/budgets", newBudget)
             .then(response => {
+                console.log('how about here', response);
                 dispatch({
                     type: "ADD_BUDGET",
                     newBudget: response.data

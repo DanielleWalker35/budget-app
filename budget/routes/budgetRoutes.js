@@ -1,7 +1,7 @@
 const express = require("express");
 const budgetRouter = express.Router();
 
-const BudgetModel = require("../models/budgetModel.js");
+const BudgetModel = require("../models/budget");
 
 budgetRouter.route("/")
     .get((req, res) => {
