@@ -1,7 +1,7 @@
 const express = require("express");
 const transactionRouter = express.Router();
 
-const TransactionModel = require("../models/transactionModel.js");
+const TransactionModel = require("../models/transactions");
 
 transactionRouter.route("/")
     .get((req, res) => {
