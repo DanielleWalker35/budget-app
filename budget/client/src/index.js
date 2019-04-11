@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/index.js";
+import Budget from './Budget/budget';
 
 import App from "./App";
 import "./index.css";
@@ -11,7 +12,10 @@ import "./index.css";
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <App />
+            <Switch>
+                <Route exact path='/' component={App} />
+                <Route path='/Budget/:budgetId' component={Budget} />
+            </Switch>
         </BrowserRouter>
     </Provider>
     , document.getElementById("root"));

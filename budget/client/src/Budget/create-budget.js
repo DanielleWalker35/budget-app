@@ -1,7 +1,8 @@
     
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { addBudget } from "../redux/budgetsRedux";
+import { addBudget, deleteBudget } from "../redux/budgetsRedux";
+import BudgetsList from './budgetsList';
 
 
 
@@ -50,6 +51,8 @@ class CreateBudget extends Component {
             )
         } else {
             const { name, description } = this.state.inputs;
+            const budgetsList = this.props.budgetData.map(budget => <BudgetsList key={budget._id} {...budget} />)
+
             return (
                 <div className="budgetInputs">
                     <h1 className="budgetTitle">Budgets</h1>
@@ -60,9 +63,9 @@ class CreateBudget extends Component {
                         <button className="submitButton">Create Budget</button>
                     </form>
                     <h2>Choose an exsisting budget:</h2>
-                    <div className="budgetList">
-                        List my budgets here
-                    </div>
+                    <ul className="budgetList">
+                        {budgetsList}
+                    </ul>
                 </div>
             )
         }
@@ -71,5 +74,5 @@ class CreateBudget extends Component {
 const mapStateToProps = state => {
     return state.budgets;
 }
-export default connect(mapStateToProps, { addBudget })(CreateBudget);
+export default connect(mapStateToProps, { addBudget, deleteBudget })(CreateBudget);
 
