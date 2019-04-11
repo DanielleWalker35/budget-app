@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
 const transactionSchema = new Schema ({
-    name: {
+    transactionName: {
         type: String,
         required: true
     },
@@ -12,7 +12,11 @@ const transactionSchema = new Schema ({
     },
     type: {
         type: String
-    }
+    },
+    budget: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'budget' 
+    },
 })
 
 const TransactionModel = mongoose.model("transaction", transactionSchema);

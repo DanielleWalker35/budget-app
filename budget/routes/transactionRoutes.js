@@ -1,11 +1,13 @@
 const express = require("express");
 const transactionRouter = express.Router();
+const BudgetModel = require('../models/budget');
+
 
 const TransactionModel = require("../models/transactions");
 
 transactionRouter.route("/")
     .get((req, res) => {
-        TransactionModel.find(req.query)
+        TransactionModel.find({ "budget": "5cae2fa3dbcf2fad598407e" })
             .exec((err, transaction) => {
                 if (err) return res.send(err);
                 res.status(200).send(transaction);
@@ -17,6 +19,14 @@ transactionRouter.route("/")
             if (err) return res.send(err);
             res.status(201).send(createdTransaction);
         })
+    })
+transactionRouter.route("/:budgetId")
+    .get((req, res) => {
+        TransactionModel.find({ "budget": req.params.budgetId })
+            .exec((err, transaction) => {
+                if (err) return res.send(err);
+                res.status(200).send(transaction);
+            })
     })
 
 transactionRouter.route("/:id")
