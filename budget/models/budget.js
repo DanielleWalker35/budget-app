@@ -8,12 +8,7 @@ const budgetSchema = new Schema({
     },
     description: {
         type: String
-    },
-    transactions: [{ 
-        type: Schema.Types.ObjectId, 
-        ref: 'transaction' 
-    }],
-
+    }
 })
 
 const BudgetModel = mongoose.model("budget", budgetSchema);

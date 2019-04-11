@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { editBudget, deleteBudget, getBudgetInfo } from "../redux/budgetsRedux";
+import { getBudgetInfo } from "../redux/budgetsRedux";
+import { addTransaction, getTransactions } from "../redux/transactionsRedux";
+import { Link } from "react-router-dom";
+import Table from './table';
 
 class Budget extends Component {
-    //add state with showModal: false,
     constructor(props) {
         super(props);
         this.initialState = {
             inputs: {
-                name: this.props.name || "",
-                description: this.props.description || "",
-            },
-            showModal: false
+                transactionName: "",
+                amount: "",
+                type: "",
+                budget: this.props.match.params.budgetId || ""
+            }
         }
         this.state = this.initialState;
         this.handleChange = this.handleChange.bind(this);
@@ -21,9 +24,9 @@ class Budget extends Component {
     componentDidMount() {
         const { budgetId } = this.props.match.params;
         this.props.getBudgetInfo(budgetId);
+        this.props.getTransactions(budgetId);
 
     }
-    
     handleChange(event) {
         const { name, value } = event.target;
         this.setState(prevState => {
@@ -38,35 +41,42 @@ class Budget extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.editBudget(this.state.inputs, this.props._id);
+        this.props.addTransaction(this.state.inputs);
+        this.setState(this.initialState)
     }
 
     render() {
-        // const { name, description } = this.state.inputs;
-        const { name, description } = this.props.info;
+        const { name, description } = this.props.budgets.info;
+        const { transactionName, amount, type } = this.state.inputs;
 
         return (
-            <div className="BudgetWrapper">
-                <div className="BudgetName">
-                    <h2>{name}</h2>
-                    <p className="budgetDescription">{description}</p>
-                    {/* <button className="editButton">Edit</button> */}
+            <div className="budgetWrapper">
+                <div>
+                    <div className="budgetName">{name}</div>
+                    <div className="budgetDescription">{description}</div>
                 </div>
-                <button onClick={() => this.props.deleteBudget(this.props._id)} className="deleteButton"></button>
-                    <div className="boxForModal">
-                        <form className="editForm" onSubmit={this.handleSubmit}>
-                            <input onChange={this.handleChange} name="name" value={name} placeholder="Budget Name" type="text" />
-                            <input onChange={this.handleChange} name="description" value={description} placeholder="Description" type="text" />
-                            <button className="saveButton">Save Changes</button>
-                        </form>
-                    </div>
-                </div>
+                <h2>Add a new Transaction</h2>
+                <form onSubmit={this.handleSubmit} >
+                    <input onChange={this.handleChange} name="transactionName" value={transactionName} placeholder="Transaction Name" type="text" />
+                    <input onChange={this.handleChange} name="amount" value={amount} placeholder="Amount" type="number" />
+                    <select name="type" value={type} onChange={this.handleChange}>
+                        <option value="">Select a Type</option>
+                        <option value="home">Home</option>
+                        <option value="food">Food</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="car">Car</option>
+                    </select>
+                    <button className="add-transaction-button">Add Transaction</button>
+                </form>
+                <Table {...this.props} ></Table>
+                <Link to="/"><button className="back-button">Back</button></Link>
+            </div>
         )
     }
 }
 
 const mapStateToProps = state => {
-    return state.budgets;
+    return state;
 }
-export default connect(mapStateToProps, { editBudget, deleteBudget, getBudgetInfo })(Budget);
+export default connect(mapStateToProps, { getBudgetInfo, addTransaction, getTransactions })(Budget);
 

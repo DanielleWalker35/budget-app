@@ -43,9 +43,9 @@ const transactionsReducer = (state = initialState, action) => {
             return state;
     }
 }
-export const getTransactions = () => {
+export const getTransactions = (budgetId) => {
     return dispatch => {
-        axios.get("/api/transactions")
+        axios.get("/api/transactions/" + budgetId)
             .then(response => {
                 dispatch({
                     type: "GET_TRANSACTIONS",

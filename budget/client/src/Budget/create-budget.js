@@ -62,10 +62,10 @@ class CreateBudget extends Component {
                         <input onChange={this.handleChange} name="description" value={description} placeholder="Description" type="text" />
                         <button className="submitButton">Create Budget</button>
                     </form>
-                    <h2>Choose an exsisting budget:</h2>
-                    <ul className="budgetList">
+                    <h2>Or Choose an Exsisting Budget:</h2>
+                    <div className="budgetList">
                         {budgetsList}
-                    </ul>
+                    </div>
                 </div>
             )
         }
