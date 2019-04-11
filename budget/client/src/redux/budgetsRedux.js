@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const initialState = {
     budgetData: [],
+    info: {},
     loading: true,
     errMsg: ""
 }
@@ -14,6 +15,12 @@ const budgetsReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 budgetData: action.data
+            }
+        case "GET_BUDGET_INFO":
+            return {
+                ...state,
+                info: action.info,
+                loading: false,
             }
         case "ADD_BUDGET":
             return {
@@ -61,6 +68,28 @@ export const getBudgets = () => {
             })
     }
 }
+
+export const getBudgetInfo = (budgetId) => {
+    return dispatch => {
+        dispatch({
+            type: "LOADING",
+        });
+        axios.get("/api/budgets/" + budgetId)
+            .then(response => {
+                dispatch({
+                    type: "GET_BUDGET_INFO",
+                    info: response.data
+                })
+            })
+            .catch(err => {
+                dispatch({
+                    type: "ERR_MESSAGE",
+                    errMsg: "Sorry we could not obtain your budget."
+                })
+            })
+    }
+}
+
 export const addBudget = (newBudget) => {
     console.log('the new budge', newBudget);
     return dispatch => {

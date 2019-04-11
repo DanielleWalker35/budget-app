@@ -1,7 +1,7 @@
     
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { addBudget, editBudget, deleteBudget } from "../redux/budgetsRedux";
+import { addBudget, deleteBudget } from "../redux/budgetsRedux";
 import BudgetsList from './budgetsList';
 
 
@@ -63,9 +63,9 @@ class CreateBudget extends Component {
                         <button className="submitButton">Create Budget</button>
                     </form>
                     <h2>Choose an exsisting budget:</h2>
-                    <div className="budgetList">
+                    <ul className="budgetList">
                         {budgetsList}
-                    </div>
+                    </ul>
                 </div>
             )
         }
@@ -74,5 +74,5 @@ class CreateBudget extends Component {
 const mapStateToProps = state => {
     return state.budgets;
 }
-export default connect(mapStateToProps, { addBudget, editBudget, deleteBudget })(CreateBudget);
+export default connect(mapStateToProps, { addBudget, deleteBudget })(CreateBudget);
 
